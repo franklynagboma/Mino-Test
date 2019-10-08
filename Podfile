@@ -8,6 +8,6 @@ target 'Mino Test' do
   # Pods for Mino Test
     pod "SwiftyJSON"
     pod "Alamofire"
-    pod 'AlamofireImage', '~> 3.5'
+    pod 'AlamofireImage', '~> 3.3'
 
 end

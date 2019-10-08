@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MusicItemCelll" id="KGk-i7-Jjw" customClass="CustomTableViewCell" customModule="Mino_Test" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nAU-E1-4ny">
+                        <rect key="frame" x="0.0" y="0.0" width="80" height="79.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="eL0-DW-cRL"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ean-nn-MvH" userLabel="Top View">
+                        <rect key="frame" x="80" y="0.0" width="240" height="30.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="MusicItemCelll" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7B0-57-SnO">
+                                <rect key="frame" x="5" y="5" width="230" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="7B0-57-SnO" secondAttribute="bottom" constant="5" id="7da-dm-R7Z"/>
+                            <constraint firstAttribute="trailing" secondItem="7B0-57-SnO" secondAttribute="trailing" constant="5" id="bHq-jc-cSI"/>
+                            <constraint firstItem="7B0-57-SnO" firstAttribute="leading" secondItem="ean-nn-MvH" secondAttribute="leading" constant="5" id="cFf-NS-RA4"/>
+                            <constraint firstItem="7B0-57-SnO" firstAttribute="top" secondItem="ean-nn-MvH" secondAttribute="top" constant="5" id="pPZ-bS-OQy"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcu-Xe-DtJ" userLabel="Bottom View">
+                        <rect key="frame" x="80" y="30.5" width="240" height="49"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SAz-eH-Rqa" customClass="CustomButton" customModule="Mino_Test" customModuleProvider="target">
+                                <rect key="frame" x="10" y="5" width="69" height="34"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.31039815989847719" green="0.31039815989847719" blue="0.31039815989847719" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e77-Ez-mB2" customClass="CustomButton" customModule="Mino_Test" customModuleProvider="target">
+                                <rect key="frame" x="161" y="5" width="64" height="34"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.33038546954314718" green="0.33038546954314718" blue="0.33038546954314718" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvB-Yo-fJR" userLabel="Bottom Middle View">
+                                <rect key="frame" x="79" y="12" width="82" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="KOC-Q6-Ew8"/>
+                                    <constraint firstAttribute="height" constant="25" id="cOf-02-cWB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="e77-Ez-mB2" secondAttribute="bottom" constant="10" id="2P8-j3-I5p"/>
+                            <constraint firstItem="e77-Ez-mB2" firstAttribute="leading" secondItem="rvB-Yo-fJR" secondAttribute="trailing" id="8N6-nK-AL4"/>
+                            <constraint firstItem="rvB-Yo-fJR" firstAttribute="leading" secondItem="SAz-eH-Rqa" secondAttribute="trailing" id="GKE-aO-1bd"/>
+                            <constraint firstItem="e77-Ez-mB2" firstAttribute="top" secondItem="kcu-Xe-DtJ" secondAttribute="top" constant="5" id="Klu-N7-RVD"/>
+                            <constraint firstAttribute="bottom" secondItem="SAz-eH-Rqa" secondAttribute="bottom" constant="10" id="bkD-Ra-0pT"/>
+                            <constraint firstItem="SAz-eH-Rqa" firstAttribute="leading" secondItem="kcu-Xe-DtJ" secondAttribute="leading" constant="10" id="cCN-9w-dgQ"/>
+                            <constraint firstAttribute="trailing" secondItem="e77-Ez-mB2" secondAttribute="trailing" constant="15" id="gMm-Qe-Wqc"/>
+                            <constraint firstItem="SAz-eH-Rqa" firstAttribute="top" secondItem="kcu-Xe-DtJ" secondAttribute="top" constant="5" id="hbT-in-1yF"/>
+                            <constraint firstItem="rvB-Yo-fJR" firstAttribute="centerY" secondItem="kcu-Xe-DtJ" secondAttribute="centerY" id="l5f-tK-5uT"/>
+                            <constraint firstItem="rvB-Yo-fJR" firstAttribute="centerX" secondItem="kcu-Xe-DtJ" secondAttribute="centerX" id="yIQ-dY-rwJ"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ean-nn-MvH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="2lg-Y2-UBp"/>
+                    <constraint firstItem="kcu-Xe-DtJ" firstAttribute="leading" secondItem="nAU-E1-4ny" secondAttribute="trailing" id="3Fm-jJ-iMW"/>
+                    <constraint firstItem="nAU-E1-4ny" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="4nj-gt-HJt"/>
+                    <constraint firstItem="nAU-E1-4ny" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="GU3-Xu-cVQ"/>
+                    <constraint firstAttribute="bottom" secondItem="nAU-E1-4ny" secondAttribute="bottom" id="Hzb-oG-P9P"/>
+                    <constraint firstAttribute="trailing" secondItem="ean-nn-MvH" secondAttribute="trailing" id="PnA-X1-AI7"/>
+                    <constraint firstItem="ean-nn-MvH" firstAttribute="leading" secondItem="nAU-E1-4ny" secondAttribute="trailing" id="iKG-en-Jy2"/>
+                    <constraint firstAttribute="bottom" secondItem="kcu-Xe-DtJ" secondAttribute="bottom" id="jFw-zU-kKW"/>
+                    <constraint firstItem="kcu-Xe-DtJ" firstAttribute="top" secondItem="ean-nn-MvH" secondAttribute="bottom" id="lcL-FQ-nde"/>
+                    <constraint firstAttribute="trailing" secondItem="kcu-Xe-DtJ" secondAttribute="trailing" id="qYP-Lg-QnB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="downloadedCountButton" destination="e77-Ez-mB2" id="kLD-5C-02h"/>
+                <outlet property="musicImage" destination="nAU-E1-4ny" id="CB7-Lx-2xj"/>
+                <outlet property="musicTitle" destination="7B0-57-SnO" id="l7D-9c-XxB"/>
+                <outlet property="playCountButton" destination="SAz-eH-Rqa" id="L7Q-YR-tfp"/>
+            </connections>
+            <point key="canvasLocation" x="47.826086956521742" y="34.821428571428569"/>
+        </tableViewCell>
+    </objects>
+</document>
