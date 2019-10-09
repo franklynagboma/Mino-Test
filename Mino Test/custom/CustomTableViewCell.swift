@@ -12,18 +12,18 @@ class CustomTableViewCell: UITableViewCell {
 
     @IBOutlet weak var musicImage: UIImageView!
     @IBOutlet weak var musicTitle: UILabel!
-    @IBOutlet weak var playCountButton: CustomButton!
-    @IBOutlet weak var downloadedCountButton: CustomButton!
+    @IBOutlet weak var playCountLabel: CustomLabel!
+    @IBOutlet weak var downloadedCountLabel: CustomLabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        // Initialization code
+//    }
+//
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        // Configure the view for the selected state
+//    }
     
 }

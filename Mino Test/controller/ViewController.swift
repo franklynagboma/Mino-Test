@@ -22,11 +22,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var bongoButtonView: CustomButton!
     @IBOutlet weak var itemTableView: UITableView!
     
-    let MUSIC__LIST_URL : String  = "https://mynjo-stage.site.com.ng/api/index.php?/Playlists/getTracks/" +
-    "00978d67f6933af10ec8bd8045f089a4/0673CC13-476A-4786-BF27-13ADD9C44261/"
+    var musicDetail : MusicData?
+    let apiUrl = ApiUrl()
     
-    let TRACK_URL : String = "https://mynjo-stage.site.com.ng/api/index.php?/Tracks/get/" +
-    "00978d67f6933af10ec8bd8045f089a4/0673CC13-476A-4786-BF27-13ADD9C44261/"
     let defaultMusicCode : Int = 9392
     
     var musicListArray = [MusicData]()
@@ -36,14 +34,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         
         //Set up custom button test color and background color
-        naijaButtonView.setButtonTitleAndColor(buttonName: nil, titleColor: .white, baseColor: .lightGray)
-        ghanaButtonView.setButtonTitleAndColor(buttonName: nil, titleColor: .white, baseColor: .lightGray)
-        bongoButtonView.setButtonTitleAndColor(buttonName: nil, titleColor: .white, baseColor: .lightGray)
+        naijaButtonView.setButtonTitleAndColor(buttonName: nil, titleColor: .white, baseColor: nil)
+        ghanaButtonView.setButtonTitleAndColor(buttonName: nil, titleColor: .white, baseColor: nil)
+        bongoButtonView.setButtonTitleAndColor(buttonName: nil, titleColor: .white, baseColor: nil)
+        
+        
         
         //register custom cell file
         itemTableView.register(UINib(nibName: "MusicTableViewCell", bundle: nil), forCellReuseIdentifier: "MusicItemCelll")
+        
         //set auto size for item
-        configureTableViewItemSize()
+        //configureTableViewItemSize()
+        
         //Hide or show star image base on selected
         hideOrShowStartImage(tag : defaultMusicCode)
     }
@@ -66,36 +68,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ghanaStartimage.isHidden = tag != 9394
         bongoStarImage.isHidden = tag != 12185
         
+        var tagName = ""
+        if !naijaStarImage.isHidden {
+            naijaButtonView.shakeButton()
+            tagName = (naijaButtonView.titleLabel?.text)!
+        }
+        if !ghanaStartimage.isHidden {
+            ghanaButtonView.shakeButton()
+            tagName = (ghanaButtonView.titleLabel?.text)!
+        }
+        if !bongoStarImage.isHidden {
+            bongoButtonView.shakeButton()
+            tagName = (bongoButtonView.titleLabel?.text)!
+        }
         
-        makeApiCall(tagInt: tag)
+        makeApiCall(tagInt: tag, tagName: tagName)
     }
     
     
-    //return url type and return url
-    func getUrl(list : Bool, idString : String) ->  String {
-        var url = ""
-        if list {
-            url = MUSIC__LIST_URL + idString
-        }
-        else {
-            url = TRACK_URL + idString
-            
-        }
-        return url
-    }
     
-    func makeApiCall(tagInt : Int) {
+    func makeApiCall(tagInt : Int, tagName : String) {
         
         //Http request
-        Alamofire.request(getUrl(list: true, idString: String(tagInt)), method: .get, parameters: nil).responseJSON{
+        Alamofire.request(apiUrl.getUrl(list: true, idString: String(tagInt)), method: .get, parameters: nil).responseJSON{
             response in
             if response.result.isSuccess {
                 //clear the old list
                 self.musicListArray.removeAll()
                 
                 let musicList : JSON = JSON(response.result.value!)
-                //print("Music respons: \(musicList)")
+                //print("Music response: \(musicList)")
                 self.sortMusicListItem(json: musicList)
+            }
+            else {
+                self.showAlert(tagTitle: tagName)
             }
         }
     }
@@ -127,10 +133,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             musicCell.musicTitle?.text = data.titleText
             let url = URL(string: data.imageLog)
             let placeHolder = UIImage(named: "album-placeholder")
+            //let filter = AspectScaledToFitSizeFilter(size: (musicCell.musicImage?.frame.size)!)
+            //print("Image frame: \(musicCell.musicImage?.frame.size)!)")
             musicCell.musicImage?.af_setImage(withURL: url!, placeholderImage: placeHolder)
-            musicCell.playCountButton?.setButtonTitleAndColor(buttonName: "\(data.countPlays) Plays", titleColor: .white, baseColor: .lightGray)
-            musicCell.downloadedCountButton?.setButtonTitleAndColor(buttonName: "\(data.countDownloads) Downloadeds", titleColor: .white, baseColor: .lightGray)
+            musicCell.playCountLabel?.setTextTitleAndColor(lebelTitle: "\(data.countPlays) Plays", labelColor: .white, groundColor: nil)
+            musicCell.downloadedCountLabel?.setTextTitleAndColor(lebelTitle: "\(data.countDownloads) Downloadeds", labelColor: .white, groundColor: nil)
         }
+        
         
         return musicCell
     }
@@ -145,11 +154,57 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    //Height of cell
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    //Action clicked on cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Cell index row: \(indexPath.row)")
+        //get trackID
+        musicDetail = musicListArray[indexPath.row]
+        //send detail of selected cell to details view
+        performSegue(withIdentifier: "showDetails", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //Check get segue action selected reference
+        if segue.identifier == "showDetails" {
+            //cast DetailsViewdController to segue destination
+            let destinationController = segue.destination as! DetailsViewController
+            
+            //set trackID in DetailsViewController
+            destinationController.musicDetails = musicDetail
+        }
+    }
     //Set table view row height to an extendable size.
     //This allows item view to fill it container
     func configureTableViewItemSize() {
         itemTableView.rowHeight = UITableView.automaticDimension
         itemTableView.estimatedRowHeight = UITableView.automaticDimension
+        print("Item size: \(UITableView.automaticDimension)")
+    }
+    
+    private func showAlert(tagTitle : String?){
+        //Should tagTitle ve null/nil, place default string
+        var vTitle = "Select Music"
+        if let viewTitle = tagTitle {
+            vTitle = viewTitle
+        }
+        
+        let alert = UIAlertController(title: "Info!", message: "Mino could not retrieve \(vTitle), please check your internet connection and retry.", preferredStyle: .alert)
+        let acton = UIAlertAction(title: "Dismiss", style: .cancel){ (UIAlertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(acton)
+        //show alert
+        present(alert, animated: true, completion: nil)
+    }
+    
+    //Minimize application when back is clicked
+    @IBAction func dismissMusic(_ sender: UIButton) {
+        UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
     }
     
 }

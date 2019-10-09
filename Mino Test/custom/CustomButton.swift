@@ -23,7 +23,7 @@ class CustomButton : UIButton {
     }
     
     
-    func setUpCustomButton() {
+    private func setUpCustomButton() {
         setShadow()
         
         titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 18)
@@ -32,19 +32,21 @@ class CustomButton : UIButton {
         layer.borderColor = UIColor.darkGray.cgColor
     }
     
-    func setButtonTitleAndColor(buttonName : String?, titleColor : UIColor, baseColor : UIColor) {
+    func setButtonTitleAndColor(buttonName : String?, titleColor : UIColor, baseColor : UIColor?) {
         if let name = buttonName{
             setTitle(name, for: .normal)
         }
-        backgroundColor = baseColor
-        setTitleColor(titleColor, for: .normal)
+        if let viewColor = baseColor {
+            backgroundColor = viewColor
+            setTitleColor(titleColor, for: .normal)
+        }
     }
     
     
     private func setShadow() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
-        layer.shadowRadius = 8
+        layer.shadowRadius = 5
         layer.shadowOpacity = 0.5
         clipsToBounds = true
         layer.masksToBounds = false
