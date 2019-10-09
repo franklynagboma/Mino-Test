@@ -22,6 +22,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var detailsDownloadCountLabel: CustomLabel!
     
     
+    //viewDidLoad is called before viewDidAppear
     override func viewDidLoad() {
         super.viewDidLoad()
 
