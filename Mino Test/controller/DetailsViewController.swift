@@ -22,7 +22,6 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var detailsDownloadCountLabel: CustomLabel!
     
     
-    //viewDidLoad is called before viewDidAppear
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +37,7 @@ class DetailsViewController: UIViewController {
             
             //makeApiCall(musicDetails: detail)
         
+            //If api calls is neccessary, uncomment above and comment below setDetailsViewItem
             setDetailsViewItem(musicDetails: detail)
             
         }
