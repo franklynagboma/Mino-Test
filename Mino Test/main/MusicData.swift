@@ -14,12 +14,18 @@ class MusicData {
     let imageLog : String
     let countDownloads : String
     let countPlays : String
+    let fileName : String
+    let songId : Int
+    let duration : Int
     
-    init(trKId : String, titleString : String, imageString : String, downloadedString : String, playString : String) {
-        trackId = trKId
-        titleText = titleString
-        imageLog = imageString
-        countDownloads = downloadedString
-        countPlays = playString
+    init(trackId : String, titleText : String, imageLog : String, countDownloads : String, countPlays : String, fileName : String, songId : Int, duration : Int) {
+        self.trackId = trackId
+        self.titleText = titleText
+        self.imageLog = imageLog
+        self.countDownloads = countDownloads
+        self.countPlays = countPlays
+        self.fileName = fileName
+        self.songId = songId
+        self.duration = duration
     }
 }

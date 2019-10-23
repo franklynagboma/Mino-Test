@@ -9,5 +9,6 @@ target 'Mino Test' do
     pod "SwiftyJSON"
     pod "Alamofire"
     pod 'AlamofireImage', '~> 3.3'
+    pod "StreamingKit"
 
 end

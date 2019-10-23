@@ -11,34 +11,41 @@ import Alamofire
 import SwiftyJSON
 import AlamofireImage
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, SongHasLoaded {
 
     var musicDetails : MusicData?
     let apiUrl = ApiUrl()
+    var fileName : String = ""
+    var songId : Int = 0
+    private var hasData : Bool = false
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailsImage: UIImageView!
     @IBOutlet weak var detaildplayCountLabel: CustomLabel!
     @IBOutlet weak var detailsDownloadCountLabel: CustomLabel!
+    @IBOutlet weak var playOrPauseButton: UIButton!
+    @IBOutlet weak var timerLabel: UILabel!
     
-    
+    //viewDidLoad is called before viewDidAppear
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         //print("Track ID: \(musicTrackingId)")
+        
+        //default view
+        songLoaded(loaded: false, isPlaying: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         //only make api call when string is not null
         if let detail = musicDetails {
-            //Since detail is the same from previous view,
-            //no need to call api, comment for now.
-            
-            //makeApiCall(musicDetails: detail)
+            //Since detail is the same api data set from previous view except for filename(mp3 file url)
+            //Get new api data set to retrieve filename(mp3 file url)
+            makeApiCall(musicDetails: detail)
         
             //If api calls is neccessary, uncomment above and comment below setDetailsViewItem
-            setDetailsViewItem(musicDetails: detail)
+            //else do the opposite
+            //setDetailsViewItem(musicDetails: detail)
             
         }
         else {
@@ -66,8 +73,13 @@ class DetailsViewController: UIViewController {
         let title = json["track"]["title"].string!
         let imageLog = json["track"]["image_loc"].string!
         let playCount = json["track"]["count_plays"].string!
+        let fileName = json["track"]["filename"].string ?? ""
+        let id = json["track"]["id"].string!
+        let duration = json["track"]["duration"].string!
+        let songId = Int (id) ?? -1
+        let time = Int (duration) ?? 0
         
-        let details = MusicData(trKId: "", titleString: title, imageString: imageLog, downloadedString: musicDetails!.countPlays, playString: playCount)
+        let details = MusicData(trackId: "", titleText: title, imageLog: imageLog, countDownloads: musicDetails!.countDownloads, countPlays: playCount, fileName: fileName, songId: songId, duration: time)
         setDetailsViewItem(musicDetails: details)
     }
     //set upd view from bundle
@@ -79,6 +91,12 @@ class DetailsViewController: UIViewController {
         detailsImage.af_setImage(withURL: url!, placeholderImage: placeHolder)
         detaildplayCountLabel.setTextTitleAndColor(lebelTitle: "\(musicDetails.countPlays) Plays", labelColor: .white, groundColor: nil)
         detailsDownloadCountLabel.setTextTitleAndColor(lebelTitle: "\(musicDetails.countDownloads) Downloadeds", labelColor: .white, groundColor: nil)
+        timerLabel.text = MusicPlayer.getInstance().getTimerString(duration: musicDetails.duration)
+        
+        fileName = musicDetails.fileName
+        songId = musicDetails.songId
+        
+        playOrPause()
     }
     
     private func showAlert(){
@@ -91,7 +109,42 @@ class DetailsViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func seekPressed(_ sender: UISlider) {
+    }
+    
+    @IBAction func seekReleased(_ sender: UISlider) {
+    }
+    
+    @IBAction func onPlayPauseClicked(_ sender: UIButton) {
+        playOrPause()
+    }
+    
+    private func playOrPause() {
+        if !fileName.isEmpty && songId > -1 {
+            MusicPlayer.getInstance().playOrPauseTrack(url: fileName, songId: songId)
+            MusicPlayer.getInstance().delegate(delegateLoaded: self)
+        }
+        
+    }
+    
+    func songLoaded(loaded: Bool?, isPlaying : Bool) {
+        hasData = loaded ?? false
+        //set button playOrPause enable
+        playOrPauseButton.isEnabled = hasData
+        updatePlayOrPauseView(isPlay: isPlaying)
+    }
+    
+    func updatePlayOrPauseView(isPlay : Bool) {
+        if isPlay {
+            playOrPauseButton.setImage(UIImage(named: "ic_pause_white"), for: .normal)
+        }
+        else {
+            playOrPauseButton.setImage(UIImage(named: "ic_play_white"), for: .normal)
+        }
+    }
+    
     @IBAction func dismissDetails(_ sender: UIButton) {
+        MusicPlayer.getInstance().stopTrack()
         self.dismiss(animated: true, completion: nil)
     }
     

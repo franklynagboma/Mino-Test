@@ -114,7 +114,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let countDownloads = json[count]["count_downloads"].string!
                 let countPlays = json[count]["count_plays"].string!
                 
-                musicListArray.append(MusicData(trKId: trackId, titleString: titleText, imageString: imageLog, downloadedString: countDownloads, playString: countPlays))
+                musicListArray.append(MusicData(trackId: trackId, titleText: titleText, imageLog: imageLog, countDownloads: countDownloads, countPlays: countPlays, fileName: "", songId: 0, duration: 0))
 
             }
         }
