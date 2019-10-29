@@ -391,32 +391,45 @@
                                 <rect key="frame" x="0.0" y="517" width="375" height="100"/>
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Qgk-g4-Ck3">
-                                        <rect key="frame" x="5" y="10" width="297" height="41"/>
+                                        <rect key="frame" x="58" y="10" width="259" height="41"/>
                                         <color key="tintColor" red="0.41307106599999999" green="0.043900855959999999" blue="0.13966965810000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Pm9-ZI-ksw"/>
+                                            <constraint firstAttribute="height" constant="40" id="IkC-CI-YyF"/>
                                         </constraints>
                                         <color key="thumbTintColor" red="0.41307106599999999" green="0.043900855959999999" blue="0.13966965810000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <connections>
                                             <action selector="seekPressed:" destination="3eI-BF-Llk" eventType="touchDown" id="ivj-RO-wB6"/>
+                                            <action selector="seekReleased:" destination="3eI-BF-Llk" eventType="touchDragExit" id="EIV-7Y-Xyb"/>
+                                            <action selector="seekReleased:" destination="3eI-BF-Llk" eventType="touchCancel" id="YJa-dt-TC9"/>
                                             <action selector="seekReleased:" destination="3eI-BF-Llk" eventType="touchUpInside" id="jWT-OE-fXr"/>
+                                            <action selector="seekReleased:" destination="3eI-BF-Llk" eventType="touchDragOutside" id="t7e-Ss-Gzz"/>
+                                            <action selector="seekReleased:" destination="3eI-BF-Llk" eventType="touchUpOutside" id="uJq-kJ-uzn"/>
                                         </connections>
                                     </slider>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nyy-VB-uyR" userLabel="playorpause">
                                         <rect key="frame" x="167.5" y="50" width="40" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="AFV-ud-vjx"/>
-                                            <constraint firstAttribute="height" constant="40" id="SXr-Rv-y2D"/>
+                                            <constraint firstAttribute="height" constant="40" id="Fec-Z9-2ln"/>
+                                            <constraint firstAttribute="width" constant="40" id="XHj-tQ-sja"/>
                                         </constraints>
                                         <state key="normal" image="ic_play_white"/>
                                         <connections>
                                             <action selector="onPlayPauseClicked:" destination="3eI-BF-Llk" eventType="touchUpInside" id="i1Q-nJ-LtD"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTt-xa-5g7">
-                                        <rect key="frame" x="300" y="15" width="70" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:0:0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTt-xa-5g7" userLabel="Time end">
+                                        <rect key="frame" x="315" y="15" width="55" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="h0n-5Y-ia7"/>
+                                            <constraint firstAttribute="height" constant="30" id="fvy-w3-rwa"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:0:0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0t-gx-48b" userLabel="Time start">
+                                        <rect key="frame" x="5" y="15" width="55" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="5In-Km-9oq"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -425,15 +438,18 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.084688293149999996" green="0.084688293149999996" blue="0.084688293149999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="nyy-VB-uyR" firstAttribute="centerY" secondItem="suE-UF-JVX" secondAttribute="centerY" constant="20" id="5Mj-YC-FD5"/>
-                                    <constraint firstAttribute="trailing" secondItem="fTt-xa-5g7" secondAttribute="trailing" constant="5" id="A4Q-Bn-PUa"/>
-                                    <constraint firstItem="Qgk-g4-Ck3" firstAttribute="leading" secondItem="suE-UF-JVX" secondAttribute="leading" constant="7" id="CHZ-DI-CeH"/>
-                                    <constraint firstItem="fTt-xa-5g7" firstAttribute="top" secondItem="suE-UF-JVX" secondAttribute="top" constant="15" id="TlW-2Y-TN9"/>
-                                    <constraint firstItem="fTt-xa-5g7" firstAttribute="leading" secondItem="suE-UF-JVX" secondAttribute="leading" constant="300" id="bfp-Uh-D6q"/>
-                                    <constraint firstItem="nyy-VB-uyR" firstAttribute="centerX" secondItem="suE-UF-JVX" secondAttribute="centerX" id="c0a-5t-Gro"/>
-                                    <constraint firstItem="fTt-xa-5g7" firstAttribute="leading" secondItem="Qgk-g4-Ck3" secondAttribute="trailing" id="m9x-kF-Okx"/>
-                                    <constraint firstItem="Qgk-g4-Ck3" firstAttribute="top" secondItem="suE-UF-JVX" secondAttribute="top" constant="10" id="uuo-jp-a7B"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qgk-g4-Ck3" secondAttribute="trailing" constant="60" id="0Vc-qy-HLi"/>
+                                    <constraint firstItem="T0t-gx-48b" firstAttribute="leading" secondItem="suE-UF-JVX" secondAttribute="leading" constant="5" id="202-Wd-6nK"/>
+                                    <constraint firstItem="nyy-VB-uyR" firstAttribute="centerX" secondItem="suE-UF-JVX" secondAttribute="centerX" id="AwL-tx-3Hy"/>
+                                    <constraint firstAttribute="trailing" secondItem="fTt-xa-5g7" secondAttribute="trailing" constant="5" id="DWy-EA-15X"/>
+                                    <constraint firstItem="nyy-VB-uyR" firstAttribute="centerY" secondItem="suE-UF-JVX" secondAttribute="centerY" constant="20" id="HMC-1s-k2Z"/>
+                                    <constraint firstItem="fTt-xa-5g7" firstAttribute="leading" secondItem="Qgk-g4-Ck3" secondAttribute="trailing" id="Uhw-ET-l6t"/>
+                                    <constraint firstItem="Qgk-g4-Ck3" firstAttribute="leading" secondItem="T0t-gx-48b" secondAttribute="trailing" id="WAI-to-8Ci"/>
+                                    <constraint firstItem="T0t-gx-48b" firstAttribute="top" secondItem="suE-UF-JVX" secondAttribute="top" constant="15" id="Ze5-cY-Xy4"/>
+                                    <constraint firstItem="fTt-xa-5g7" firstAttribute="top" secondItem="suE-UF-JVX" secondAttribute="top" constant="15" id="gl2-jR-ZVs"/>
+                                    <constraint firstItem="Qgk-g4-Ck3" firstAttribute="leading" secondItem="suE-UF-JVX" secondAttribute="leading" constant="60" id="jbH-Nr-tKk"/>
                                     <constraint firstAttribute="height" constant="100" id="yAL-sU-RKh"/>
+                                    <constraint firstItem="Qgk-g4-Ck3" firstAttribute="top" secondItem="suE-UF-JVX" secondAttribute="top" constant="10" id="yBc-4h-HYX"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJp-gA-ppK" userLabel="Bottom View">
@@ -506,6 +522,8 @@
                         <outlet property="detailsDownloadCountLabel" destination="SGQ-zv-k5u" id="SDs-AX-ODr"/>
                         <outlet property="detailsImage" destination="0Hb-Pl-kBo" id="AnO-e5-GVy"/>
                         <outlet property="playOrPauseButton" destination="nyy-VB-uyR" id="nkR-ca-xn5"/>
+                        <outlet property="sliderBar" destination="Qgk-g4-Ck3" id="ecU-9L-qVx"/>
+                        <outlet property="startTimerLable" destination="T0t-gx-48b" id="5a7-pb-Myf"/>
                         <outlet property="timerLabel" destination="fTt-xa-5g7" id="G1O-hy-7Eu"/>
                         <outlet property="titleLabel" destination="g5O-5p-DH1" id="dPv-Pe-6AT"/>
                     </connections>

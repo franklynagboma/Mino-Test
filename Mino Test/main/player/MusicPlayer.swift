@@ -12,11 +12,13 @@ import MediaPlayer
 
 protocol SongHasLoaded {
     func songLoaded(loaded : Bool?, isPlaying : Bool)
+    func updateSliderTime(minimum : Float, maximum : Float, progress : Float)
 }
 
 class MusicPlayer : NSObject, STKAudioPlayerDelegate {
     
     private static let instance = MusicPlayer()
+    private var timer : Timer?
     private var audioPlayer : STKAudioPlayer!
     private var backgroundSession : Bool = false
     private var isPlaying : Bool = false
@@ -29,6 +31,7 @@ class MusicPlayer : NSObject, STKAudioPlayerDelegate {
     override init() {
         super.init()
         initializePlayer()
+        initializeTimer()
     }
     
     internal static func getInstance() -> MusicPlayer {
@@ -45,6 +48,17 @@ class MusicPlayer : NSObject, STKAudioPlayerDelegate {
         //set up audioPlayer
         audioPlayer = STKAudioPlayer.init(options: opts)
         audioPlayer.delegate = self
+    }
+    
+    private func initializeTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(progressTimer), userInfo: nil, repeats: true)
+    }
+    
+    @objc func progressTimer() {
+        
+        if audioPlayer.duration != 0 && currentlyPlaying {
+            delegateLoaded?.updateSliderTime(minimum: 0, maximum: Float(audioPlayer.duration), progress: Float(audioPlayer.progress))
+        }
     }
     
     func audioPlayer(_ audioPlayer: STKAudioPlayer, didStartPlayingQueueItemId queueItemId: NSObject) {
@@ -116,11 +130,15 @@ class MusicPlayer : NSObject, STKAudioPlayerDelegate {
         delegateLoaded?.songLoaded(loaded: currentlyPlaying, isPlaying: currentlyPlaying)
     }
     
+    func seekBar(time : Double) {
+        audioPlayer.seek(toTime: time)
+    }
+    
     
     //Get the duration of current song playing in timer mode
     func getTimerString(duration: Int) -> String {
         let (h, m, s) = intToHMSInt(duration: duration)
-        return ("\(h)H: \(m)m: \(s)s")
+        return ("\(h):\(m):\(s)")
     }
     
     //get int duration in Hours, Minutes and Seconds
@@ -151,6 +169,10 @@ class MusicPlayer : NSObject, STKAudioPlayerDelegate {
     
     func getCurrentlyPlaying() -> Bool {
         return currentlyPlaying
+    }
+    
+    func setCurrentlyPlaying(value : Bool)  {
+        currentlyPlaying = value
     }
     
     func logPrint(type : String, message : String) {

@@ -25,6 +25,8 @@ class DetailsViewController: UIViewController, SongHasLoaded {
     @IBOutlet weak var detailsDownloadCountLabel: CustomLabel!
     @IBOutlet weak var playOrPauseButton: UIButton!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var startTimerLable: UILabel!
+    @IBOutlet weak var sliderBar: UISlider!
     
     //viewDidLoad is called before viewDidAppear
     override func viewDidLoad() {
@@ -91,6 +93,7 @@ class DetailsViewController: UIViewController, SongHasLoaded {
         detailsImage.af_setImage(withURL: url!, placeholderImage: placeHolder)
         detaildplayCountLabel.setTextTitleAndColor(lebelTitle: "\(musicDetails.countPlays) Plays", labelColor: .white, groundColor: nil)
         detailsDownloadCountLabel.setTextTitleAndColor(lebelTitle: "\(musicDetails.countDownloads) Downloadeds", labelColor: .white, groundColor: nil)
+        startTimerLable.text = "0:0:0"
         timerLabel.text = MusicPlayer.getInstance().getTimerString(duration: musicDetails.duration)
         
         fileName = musicDetails.fileName
@@ -110,9 +113,12 @@ class DetailsViewController: UIViewController, SongHasLoaded {
     }
     
     @IBAction func seekPressed(_ sender: UISlider) {
+        MusicPlayer.getInstance().setCurrentlyPlaying(value: false)
     }
     
     @IBAction func seekReleased(_ sender: UISlider) {
+        MusicPlayer.getInstance().seekBar(time: Double(sliderBar.value))
+        MusicPlayer.getInstance().setCurrentlyPlaying(value: true)
     }
     
     @IBAction func onPlayPauseClicked(_ sender: UIButton) {
@@ -132,6 +138,15 @@ class DetailsViewController: UIViewController, SongHasLoaded {
         //set button playOrPause enable
         playOrPauseButton.isEnabled = hasData
         updatePlayOrPauseView(isPlay: isPlaying)
+    }
+    
+    func updateSliderTime(minimum: Float, maximum: Float, progress: Float) {
+        sliderBar.minimumValue = minimum
+        sliderBar.maximumValue = maximum
+        sliderBar.value = progress
+        
+        //start timer progress
+        startTimerLable.text = MusicPlayer.getInstance().getTimerString(duration: Int(progress))
     }
     
     func updatePlayOrPauseView(isPlay : Bool) {
